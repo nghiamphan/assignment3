@@ -24,6 +24,13 @@ def compare_models(file_name: str, model_name_1: str, model_name_2: str, target_
     cosine_diff = [top_matches_2[i][1] - top_matches_1[i][1] for i in range(len(top_matches_1))]
     rank_diff = [top_matches_1[i][2] - top_matches_2[i][2] for i in range(len(top_matches_1))]
 
+    # print result
+    print(f"{target_person}'s description: {mm.data[target_person]}")
+    top_5 = sorted(top_matches_1, key=lambda x: x[2])[:5]
+    print_top_5(mm, top_5, target_person, model_name_1)
+    top_5 = sorted(top_matches_2, key=lambda x: x[2])[:5]
+    print_top_5(mm, top_5, target_person, model_name_2)
+
     # draw graph
     plt.figure(figsize=(20, 10))
 
@@ -48,6 +55,13 @@ def compare_models(file_name: str, model_name_1: str, model_name_2: str, target_
         size=16,
     )
     plt.show()
+
+
+def print_top_5(mm: M.MatchMaker, top_5: list[list], target_person: str, model_name: str):
+    print(f"\nTop five closest people to {target_person} by embeddings of {model_name}")
+    print(f"\n{'Rank':<5} {'Name':<30} {'Cosine Similarity':<20} {'Description'}")
+    for name, cosine_similarity, rank in top_5:
+        print(f"{rank:<5} {name:<30} {cosine_similarity:<20.4f} {mm.data[name]}")
 
 
 def main():
