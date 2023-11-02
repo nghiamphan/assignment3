@@ -1,0 +1,14 @@
+name: matchmaker
+channels:
+  - conda-forge
+dependencies:
+  - python
+  - pip
+  - pip:
+    - scipy
+    - sklearn
+    - sentence-transformers
+    - umap-learn
+    - matplotlib
+    - black
+
