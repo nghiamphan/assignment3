@@ -47,8 +47,8 @@ def sentence_embedding(model: SentenceTransformer, people: dict) -> dict:
         dictionary {name: description_embedding}
     """
     person_embeddings = {}
-    for person in people.keys():
-        person_embeddings[person] = model.encode(people[person])
+    for name in people.keys():
+        person_embeddings[name] = model.encode(people[name])
     return person_embeddings
 
 
@@ -70,8 +70,8 @@ def dimension_reduction(person_embeddings: dict, n_neighbors: int, min_dist: flo
     umap_vectors = umap_model.fit_transform(list(person_embeddings.values()))
 
     umap_dict = {}
-    for i, person in enumerate(person_embeddings.keys()):
-        umap_dict[person] = umap_vectors[i]
+    for i, name in enumerate(person_embeddings.keys()):
+        umap_dict[name] = umap_vectors[i]
 
     return umap_dict
 
@@ -92,8 +92,8 @@ def umap_visualization(umap_dict: dict) -> None:
     y = [row[1] for row in umap_vectors]
 
     plt.scatter(x, y)
-    for i, person in enumerate(umap_dict):
-        plt.annotate(person, (x[i], y[i]), fontsize=9)
+    for i, name in enumerate(umap_dict):
+        plt.annotate(name, (x[i], y[i]), fontsize=9)
 
     plt.savefig("visualization.png", dpi=800)
     plt.show()
@@ -119,8 +119,8 @@ def similarity_ranking(person_embeddings: dict, target_person: str) -> list[list
     """
     # calculate cosine similarity
     top_matches = []
-    for person in person_embeddings.keys():
-        top_matches.append([person, 1 - cosine(person_embeddings[target_person], person_embeddings[person])])
+    for name in person_embeddings.keys():
+        top_matches.append([name, 1 - cosine(person_embeddings[target_person], person_embeddings[name])])
 
     # add similarity ranking
     top_matches.sort(key=lambda x: -x[1])  # sort by cosine similarity

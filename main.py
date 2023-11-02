@@ -1,3 +1,4 @@
+import re
 import warnings
 
 from sentence_transformers import SentenceTransformer
@@ -36,6 +37,10 @@ class MatchMaker:
         """
         Preprocess the data if necessary
         """
+        # remove punctuation
+        for name in self.data.keys():
+            self.data[name] = re.sub(r"[^\w\s]", "", self.data[name])
+
         return self.data
 
     def sentence_embedding(self, model_name: str = None) -> dict:
