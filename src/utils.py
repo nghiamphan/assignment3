@@ -76,7 +76,7 @@ def dimension_reduction(person_embeddings: dict, n_neighbors: int, min_dist: flo
     return umap_dict
 
 
-def umap_visualization(umap_dict: dict) -> None:
+def umap_visualization(umap_dict: dict, image_file_name: str = None) -> None:
     """
     Visualize people's embeddings using UMAP.
 
@@ -84,6 +84,8 @@ def umap_visualization(umap_dict: dict) -> None:
     ----------
     umap_dict: dict{str: list[float]}
         dictionary {name: umap_vector}
+    image_file_name: str
+        file name to save the image
     """
     plt.figure(figsize=(20, 10))
 
@@ -95,7 +97,8 @@ def umap_visualization(umap_dict: dict) -> None:
     for i, name in enumerate(umap_dict):
         plt.annotate(name, (x[i], y[i]), fontsize=9)
 
-    plt.savefig("visualization.png", dpi=800)
+    if image_file_name:
+        plt.savefig(image_file_name, dpi=800)
     plt.show()
 
 

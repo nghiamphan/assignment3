@@ -60,8 +60,8 @@ class MatchMaker:
         self.dim_reduced_embeddings = U.dimension_reduction(self.embeddings, n_neighbors, min_dist, random_state)
         return self.dim_reduced_embeddings
 
-    def visualization(self):
-        U.umap_visualization(self.dim_reduced_embeddings)
+    def visualization(self, image_file_name: str = None):
+        U.umap_visualization(self.dim_reduced_embeddings, image_file_name)
 
     def make_pipeline(
         self,
@@ -86,7 +86,7 @@ class MatchMaker:
 def main():
     mm = MatchMaker(C.FILE_NAME, C.MINILM_L6_V2)
     mm.make_pipeline(preprocess=True, embed_sentence=True, reduce_dimens=True)
-    mm.visualization()
+    mm.visualization("visualization.png")
 
 
 if __name__ == "__main__":
