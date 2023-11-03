@@ -10,5 +10,6 @@ dependencies:
     - sentence-transformers
     - umap-learn
     - matplotlib
+    - optuna
     - black
 
