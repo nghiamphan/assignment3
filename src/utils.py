@@ -1,6 +1,7 @@
 import csv
 import matplotlib.pyplot as plt
 import umap
+import warnings
 
 from scipy.spatial.distance import cosine
 from sentence_transformers import SentenceTransformer
@@ -66,6 +67,7 @@ def dimension_reduction(person_embeddings: dict, n_neighbors: int, min_dist: flo
     umap_dict: dict{str: list[float]}
         dictionary {name: umap_vector}
     """
+    warnings.simplefilter("ignore")
     umap_model = umap.UMAP(n_neighbors=n_neighbors, min_dist=min_dist, random_state=random_state)
     umap_vectors = umap_model.fit_transform(list(person_embeddings.values()))
 
@@ -118,7 +120,7 @@ def similarity_ranking(person_embeddings: dict, target_person: str) -> list[list
     Return
     ------
     top_matches: list[list[str, float, int]]
-        [[name, cosine_similarity, rank]] ranked alphabetically by name
+        [[name, cosine_similarity, rank]] sorted alphabetically by name
     """
     # calculate cosine similarity
     top_matches = []
@@ -140,7 +142,7 @@ def get_all_ranks(person_embeddings: dict) -> list:
     """
     Given the embeddings of people's description, for each person, get a list of
     cosine similarity rankings of other people (sorted alphabetically) by name to that person.
-    Return the concanation of all those lists.
+    Return the concatenation of all those lists.
 
     Parameters
     ----------

@@ -1,5 +1,4 @@
 import re
-import warnings
 
 from sentence_transformers import SentenceTransformer
 from src import config as C
@@ -56,7 +55,6 @@ class MatchMaker:
         """
         Dimension reduction using tools such as UMAP.
         """
-        warnings.simplefilter("ignore")
         self.dim_reduced_embeddings = U.dimension_reduction(self.embeddings, n_neighbors, min_dist, random_state)
         return self.dim_reduced_embeddings
 
